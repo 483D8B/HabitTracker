@@ -54,6 +54,7 @@
             font-size: 0.5em;
             border-bottom: 1px dotted black;
             text-align: center;
+            font-weight: 600;
         }
 
         #zoomSlider {
@@ -81,6 +82,10 @@
         .activities {
             flex: 1 1 33.33%;
         }
+
+        .activities::before{
+   content: "\200B";
+}
 
         img{
         max-width:100%;
@@ -143,9 +148,9 @@
     for (var i = 1; i <= 365; i++) {
         // Get the data for the corresponding row (subtract 1 from i because arrays are 0-based)
         var rowData = data[i - 1];
-        if (rowData) {
-            // Initialize activities to empty strings
-            var activities = ["", "", "", "", ""];
+         // Initialize activities to empty strings
+        var activities = ["", "", "", "", ""];
+        if (rowData) {        
             
             // Check if the respective data columns contain "1" and update activities accordingly
             if (rowData.japanese === 1) {
@@ -165,7 +170,7 @@
             }
         } else {
             // If no data is available for this date, set activities to empty strings
-            var activities = ["", "", "", "", ""];
+            activities = ["", "", "", "", ""];
         }
 
         // Format the days as "dd/MM"
