@@ -135,6 +135,7 @@
                     });
                     updateActivities();
                     scrollToToday();
+                    checkAndUpdateBackground();
                 })
                 
         }
@@ -216,7 +217,47 @@
                 // Append the cell to the table body
                 tableBody.append(cellStructure);
             }
+           
         }
+
+        function checkAndUpdateBackground() {
+    for (let i = 2; i <= 366; i++) {
+        const cell = document.getElementById(i.toString());
+        if (cell) {
+            const activities = cell.querySelectorAll('.activities');
+
+            // Count how many img elements are in the activities
+            let imgCount = 0;
+            activities.forEach(activity => {
+                imgCount += activity.querySelectorAll('img').length;
+            });
+
+            // Select the '.inside' class within the cell and change its background based on the img count
+            const insideClass = cell.querySelector('.inside');
+            if (insideClass) {
+                if (imgCount === 5) {
+                    insideClass.style.backgroundColor = '#FFD700';
+                } else if (imgCount === 4) {
+                    insideClass.style.backgroundColor = '#C0C0C0';
+                } else if (imgCount === 3) {
+                    insideClass.style.backgroundColor = '#CD7F32';
+                } else {
+                    // Reset background color
+                    insideClass.style.backgroundColor = 'transparent';
+                }
+            }
+        }
+    }
+}
+
+
+
+// $(document).ready(function () {
+   
+
+// });  //end doc ready
+
+
 
     </script>
 
