@@ -165,11 +165,11 @@
 
             // Get today's date
             var today = new Date();
-            for (var i = 1; i <= 365; i++) {
+            for (var i = 1; i <= 371; i++) {
                 // Get the data for the corresponding row (subtract 1 from i because arrays are 0-based)
                 var rowData = data[i - 1];
                 // Initialize activities to empty strings
-                var activities = ["", "", "", "", ""];
+                var activities = ["", "", "", "", "",""];
                 if (rowData) {
 
                     // Check if the respective data columns contain "1" and update activities accordingly
@@ -188,9 +188,12 @@
                     if (rowData.yoga === 1) {
                         activities[4] = '<img src="yoga.png" alt="Yoga">';
                     }
+                    if (rowData.meditation === 1) {
+                        activities[5] = '<img src="meditation.png" alt="Meditation">';
+                    }
                 } else {
                     // If no data is available for this date, set activities to empty strings
-                    activities = ["", "", "", "", ""];
+                    activities = ["", "", "", "", "",""];
                 }
 
                 // Format the days as "dd/MM"
@@ -210,6 +213,7 @@
                     <div class="activities">${activities[2]}</div>
                     <div class="activities">${activities[3]}</div>
                     <div class="activities">${activities[4]}</div>
+                    <div class="activities">${activities[5]}</div>
                 </div>
             </div>
         `;
@@ -221,7 +225,7 @@
         }
 
         function checkAndUpdateBackground() {
-    for (let i = 2; i <= 366; i++) {
+    for (let i = 2; i <= 372; i++) {
         const cell = document.getElementById(i.toString());
         if (cell) {
             const activities = cell.querySelectorAll('.activities');
@@ -235,11 +239,11 @@
             // Select the '.inside' class within the cell and change its background based on the img count
             const insideClass = cell.querySelector('.inside');
             if (insideClass) {
-                if (imgCount === 5) {
+                if (imgCount === 6) {
                     insideClass.style.backgroundColor = '#FFD700';
-                } else if (imgCount === 4) {
+                } else if (imgCount === 5) {
                     insideClass.style.backgroundColor = '#C0C0C0';
-                } else if (imgCount === 3) {
+                } else if (imgCount === 4) {
                     insideClass.style.backgroundColor = '#CD7F32';
                 } else {
                     // Reset background color
