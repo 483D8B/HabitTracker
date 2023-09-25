@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <title>Habit Tracker</title>
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Your style here*/
+
+        /*CLASSES*/
+        .divTable {
+            display: table;
+            margin-top: 1em;
+        }
+
+        .divTableBody {
+            display: table-row-group;
+            display: flex;
+            flex-flow: row wrap;
+            gap: 2px 2px;
+            padding-left: 2px;
+            padding-right: 2px;
+
+        }
+
+        .divTableCell {
+            border: 1px solid black;
+            display: table-cell;
+            padding-left: 2px;
+            padding-right: 2px;
+            box-sizing: border-box;
+            height: 50px;
+            width: 50px;
+        }
+
+        .inside {
+            text-align: left;
+            white-space: nowrap;
+            cursor: pointer;
+            color: black;
+            user-select: none;
+            padding: 2px;
+            /* Add padding for spacing between text and cell border */
+            font-family: Verdana, Geneva, sans-serif;
+            font-size: 0.5em;
+            border-bottom: 1px dotted black;
+            text-align: center;
+        }
+
+        #zoomSlider {
+            text-align: center;
+            box-sizing: border-box;
+            display: block;
+            width: 100px;
+        }
+
+        h2 {
+            text-align: center;
+            font-family: Verdana, Geneva, sans-serif;
+        }
+
+        .todayCell {
+            border: 2px solid crimson;
+            /* Change border style for today's cell */
+        }
+
+        .content {
+            display: flex;
+            flex-flow: row wrap;
+        }
+
+        .activities {
+            font-size: 0.7em;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <!-- Your content here -->
+    <h2>Habit Tracker</h2>
+
+    <div class="divTable" id="kanji_table">
+        <div class="divTableBody" id="table_body">
+            <!-- Data will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        // Your script here
+        const sheetID = '1xHqzl2QJRca-F6rVHlsPrk4Bfg009M7iCKGqRrdSsFU';
+        const base = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?`
+        const sheetName = 'Habit Tracker';
+        const query = encodeURIComponent('Select *');
+        const url = `${base}&sheet=${sheetName}&tq=${query}`;
+        const data = [];
+
+        document.addEventListener('DOMContentLoaded', init);
+
+        function init() {
+            console.log("ready");
+            fetch(url)
+                .then(res => res.text())
+                .then(rep => {
+                    const jsData = JSON.parse(rep.substr(47).slice(0, -2));
+                    const colz = [];
+                    jsData.table.cols.forEach(heading => {
+                        if (heading.label) {
+                            colz.push(heading.label.toLowerCase().replace(/\s/g, ''));
+                        }
+                    })
+                    jsData.table.rows.forEach((main) => {
+                        const row = {};
+                        colz.forEach((ele, ind) => {
+                            row[ele] = (main.c[ind] != null) ? main.c[ind].v : '';
+                        })
+                        data.push(row)
+                    });
+                    updateActivities();
+                })
+
+        }
+
+        function updateActivities() {
+    var tableBody = $("#table_body");
+
+    // Get today's date
+    var today = new Date();
+    for (var i = 1; i <= 365; i++) {
+        // Get the data for the corresponding row (subtract 1 from i because arrays are 0-based)
+        var rowData = data[i - 1];
+        if (rowData) {
+            // Initialize activities to empty strings
+            var activities = ["", "", "", "", ""];
+            
+            // Check if the respective data columns contain "1" and update activities accordingly
+            if (rowData.japanese === 1) {
+                activities[0] = "字";
+            }
+            if (rowData.intern === 1) {
+                activities[1] = "🎓";
+            }
+            if (rowData.reading === 1) {
+                activities[2] = "📚";
+            }
+            if (rowData.exercise === 1) {
+                activities[3] = "💪";
+            }
+            if (rowData.yoga === 1) {
+                activities[4] = "🧘";
+            }
+        } else {
+            // If no data is available for this date, set activities to empty strings
+            var activities = ["", "", "", "", ""];
+        }
+
+        // Format the days as "dd/MM"
+        var date = new Date(2023, 0, i); // Month is 0-based, so 0 represents January
+        var formattedDate = date.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
+
+        // Check if the day and month match today's date
+        var isToday = date.getDate() === today.getDate() && date.getMonth() === today.getMonth();
+
+        // Create a cell for each property
+        var cellStructure = `
+            <div class="divTableCell ${isToday ? 'todayCell' : ''}" id="${i + 1}" style="position: relative;">
+                <div class="inside">${formattedDate}</div>
+                <div class="content">
+                    <div class="activities">${activities[0]}</div>
+                    <div class="activities">${activities[1]}</div>
+                    <div class="activities">${activities[2]}</div>
+                    <div class="activities">${activities[3]}</div>
+                    <div class="activities">${activities[4]}</div>
+                </div>
+            </div>
+        `;
+
+        // Append the cell to the table body
+        tableBody.append(cellStructure);
+    }
+}
+
+    </script>
+
+</body>
+
+</html>
