@@ -39,8 +39,7 @@
             padding-left: 2px;
             padding-right: 2px;
             box-sizing: border-box;
-            height: 50px;
-            width: 50px;
+            flex: 1 1 13%;
         }
 
         .inside {
@@ -80,8 +79,12 @@
         }
 
         .activities {
-            font-size: 0.7em;
+            flex: 1 1 33.33%;
         }
+
+        img{
+        max-width:100%;
+    }
 
 
     </style>
@@ -146,19 +149,19 @@
             
             // Check if the respective data columns contain "1" and update activities accordingly
             if (rowData.japanese === 1) {
-                activities[0] = "字";
+                activities[0] = '<img src="japanese.png" alt="Japanese">';
             }
             if (rowData.intern === 1) {
-                activities[1] = "🎓";
+                activities[1] = '<img src="intern.png" alt="Intern">';
             }
             if (rowData.reading === 1) {
-                activities[2] = "📚";
+                activities[2] = '<img src="reading.png" alt="Reading">';
             }
             if (rowData.exercise === 1) {
-                activities[3] = "💪";
+                activities[3] = '<img src="exercise.png" alt="Japanese">';
             }
             if (rowData.yoga === 1) {
-                activities[4] = "🧘";
+                activities[4] = '<img src="yoga.png" alt="Yoga">';
             }
         } else {
             // If no data is available for this date, set activities to empty strings
