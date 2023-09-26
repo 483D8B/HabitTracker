@@ -115,7 +115,8 @@
         }
 
         .activities {
-            flex: 1 1 33.33%;
+            /* flex: 1 1 33.33%; */
+            flex : 1 1 25%
         }
 
         .activities::before {
@@ -208,7 +209,7 @@
                 // Get the data for the corresponding row (subtract 1 from i because arrays are 0-based)
                 var rowData = data[i - 1];
                 // Initialize activities to empty strings
-                var activities = ["", "", "", "", "",""];
+                var activities = ["", "", "", "", "", "", "", ""];
                 if (rowData) {
 
                     // Check if the respective data columns in sheets contain "1" and update activities accordingly
@@ -222,7 +223,7 @@
                         activities[2] = '<img src="reading.png" alt="Reading">';
                     }
                     if (rowData.exercise === 1) {
-                        activities[3] = '<img src="exercise.png" alt="Japanese">';
+                        activities[3] = '<img src="exercise.png" alt="Exercise">';
                     }
                     if (rowData.yoga === 1) {
                         activities[4] = '<img src="yoga.png" alt="Yoga">';
@@ -230,9 +231,12 @@
                     if (rowData.meditation === 1) {
                         activities[5] = '<img src="meditation.png" alt="Meditation">';
                     }
+                    if (rowData.brushing === 1) {
+                        activities[7] = '<img src="brushing22.png" alt="Brushing">';
+                    }
                 } else {
                     // If no data is available for this date, set activities to empty strings
-                    activities = ["", "", "", "", "",""];
+                    activities = ["", "", "", "", "", "", "", ""];
                 }
 
                 // Format the days as "dd/MMM"
@@ -253,6 +257,8 @@
                     <div class="activities">${activities[3]}</div>
                     <div class="activities">${activities[4]}</div>
                     <div class="activities">${activities[5]}</div>
+                    <div class="activities">${activities[6]}</div>
+                    <div class="activities">${activities[7]}</div>
                 </div>
             </div>
         `;
