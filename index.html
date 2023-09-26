@@ -205,7 +205,7 @@
 
             // Get today's date
             var today = new Date();
-            for (var i = 1; i <= 371; i++) {
+            for (var i = 1; i <= 365; i++) {
                 // Get the data for the corresponding row (subtract 1 from i because arrays are 0-based)
                 var rowData = data[i - 1];
                 // Initialize activities to empty strings
@@ -272,7 +272,7 @@
         function checkAndUpdateBackground() {
             const today = new Date();
             
-    for (let i = 2; i <= 372; i++) {
+    for (let i = 2; i <= 366; i++) {
         const cell = document.getElementById(i.toString());
         if (cell) {
             const activities = cell.querySelectorAll('.activities');
