@@ -88,6 +88,27 @@
             /* Change border style for today's cell */
         }
 
+        .pastDay {
+    position: relative;
+}
+
+        .pastDay::before {
+    content: ""; /* You can replace "X" with your desired symbol or image */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    color: black; /* Adjust the color as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('tick.png'); /* Replace 'x.png' with the path to your X image */
+    background-size: contain; /* Scale the image to fit within the cell */
+    background-repeat: no-repeat; /* Prevent image repetition */
+    background-position: center center; /* Center the image within the cell */
+}
+
         .content {
             display: flex;
             flex-flow: row wrap;
@@ -243,6 +264,8 @@
         }
 
         function checkAndUpdateBackground() {
+            const today = new Date();
+            
     for (let i = 2; i <= 372; i++) {
         const cell = document.getElementById(i.toString());
         if (cell) {
@@ -253,6 +276,14 @@
             activities.forEach(activity => {
                 imgCount += activity.querySelectorAll('img').length;
             });
+
+            const cellDate = new Date(2023, 0, i); // Assumes the same year 
+            // Check if the cellDate is before today's date
+            if (cellDate < today) {
+                cell.classList.add('pastDay'); // Add a class to mark past days
+            } else {
+                cell.classList.remove('pastDay'); // Remove the class for future days
+            }
 
             // Select the '.inside' class within the cell and change its background based on the img count
             const insideClass = cell.querySelector('.inside');
