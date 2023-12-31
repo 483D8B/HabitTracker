@@ -1,3 +1,4 @@
+<!-- version 31/12/2023 -->
 <!DOCTYPE html>
 <html>
 
@@ -136,7 +137,7 @@
 
 <body>
     <!-- Your content here -->
-    <header><h1>Habit Tracker</h1></header>
+    <header><h1>Habit Tracker 2024</h1></header>
     
 
     <div class="divTable" id="kanji_table">
@@ -149,10 +150,11 @@
         // Your script here
         const sheetID = '1xHqzl2QJRca-F6rVHlsPrk4Bfg009M7iCKGqRrdSsFU';
         const base = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?`
-        const sheetName = 'Habit Tracker';
+        const sheetName = '2024';
         const query = encodeURIComponent('Select *');
         const url = `${base}&sheet=${sheetName}&tq=${query}`;
         const data = [];
+        const year = '2024';
 
         document.addEventListener('DOMContentLoaded', init);
 
@@ -205,7 +207,7 @@
 
             // Get today's date
             var today = new Date();
-            for (var i = 1; i <= 365; i++) {
+            for (var i = 1; i <= 366; i++) {
                 // Get the data for the corresponding row (subtract 1 from i because arrays are 0-based)
                 var rowData = data[i - 1];
                 // Initialize activities to empty strings
@@ -240,7 +242,7 @@
                 }
 
                 // Format the days as "dd/MMM"
-                var date = new Date(2023, 0, i); // Month is 0-based, so 0 represents January
+                var date = new Date(year, 0, i); // Month is 0-based, so 0 represents January
                 var formattedDate = date.toLocaleDateString('it-IT', { day: '2-digit', month: 'short' });
 
                 // Check if the day and month match today's date
@@ -283,7 +285,7 @@
                 imgCount += activity.querySelectorAll('img').length;
             });
 
-            const cellDate = new Date(2023, 0, i); // Assumes the same year 
+            const cellDate = new Date(year, 0, i); // Assumes the same year 
             // Check if the cellDate is before today's date
             if (cellDate < today) {
                 cell.classList.add('pastDay'); // Add a class to mark past days
